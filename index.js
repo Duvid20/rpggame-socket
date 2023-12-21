@@ -9,7 +9,6 @@ app.use(cors());
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-//rooms and queue for the players
 let rooms = [];
 let queue = [];
 
