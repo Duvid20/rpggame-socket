@@ -10,10 +10,11 @@ server.on("error", (error) => {
   console.log("Error starting server: " + error);
 });
 
+let waitingPlayers = [];
 let playerRooms = {};
 const MAX_PLAYERS = 3;
 
-function userJoinRoom(io, socket) {
+/*function userJoinRoom(io, socket) {
   if (waitingPlayers.length > MAX_PLAYERS);
   const player1 = waitingPlayers.shift();
   const player2 = waitingPlayers.shift();
@@ -30,28 +31,24 @@ function userJoinRoom(io, socket) {
     player2Username: player2.username,
   });
   console.log(`Game started in room ${randRoomId}`);
-}
-
-function cancelPlayerSearch(socket) {
-  waitingPlayers = waitingPlayers.filter((player) => player !== socket);
-}
+}*/
 
 io.on("connection", async (socket) => {
   console.log("User connected, ID: " + socket.id);
-  socket.on("login", (username) => {
+  /*socket.on("login", (username) => {
     socket.username = username;
     userJoinRoom(io, socket);
-  });
+  });*/
 
-  socket.on("playerMove", ({ move, fen }) => {
+  /*socket.on("playerMove", ({ move, fen }) => {
     const room = playerRooms[socket.id];
     socket.to(room).emit("opponentMove", { move, fen });
     console.log(move, fen, room);
-  });
+  });*/
 
   socket.on("disconnect", () => {
     console.log("User connected, ID: " + socket.id);
-    const room = playerRooms[socket.id];
+    /*const room = playerRooms[socket.id];
     if (room) {
       socket
         .to(room)
@@ -62,9 +59,10 @@ io.on("connection", async (socket) => {
     }
     delete playerRooms[socket.id];
     waitingPlayers = waitingPlayers.filter((player) => player !== socket);
+  });*/
   });
-});
 
-server.listen(PORT, () => {
-  console.log("Server started on port: " + PORT);
+  server.listen(PORT, () => {
+    console.log("Server started on port: " + PORT);
+  });
 });
