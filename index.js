@@ -1,43 +1,70 @@
-const express = require("express");
 const http = require("http");
-const WebSocket = require("ws");
-const cors = require("cors");
+const socketIO = require("socket.io");
 
-const app = express();
-app.use(cors());
+const server = http.createServer();
+const io = socketIO(server, { cors: { origin: "*" } });
 
-const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+const PORT = process.env.PORT || 3000;
 
-let rooms = [];
-let queue = [];
-
-wss.on("connection", (ws) => {
-  // Add the new player to the queue
-  queue.push(ws);
-
-  // Check if we need to create a new room
-  if (
-    queue.length === 10 ||
-    (rooms.length > 0 && rooms[rooms.length - 1].length === 10)
-  ) {
-    // Create a new room with the first 10 players in the queue
-    rooms.push(queue.splice(0, 10));
-
-    // Start the game in the new room
-    startGame(rooms[rooms.length - 1]);
-  }
+server.on("error", (error) => {
+  console.log("Error starting server: " + error);
 });
 
-function startGame(room) {
-  // Send a message to all players in the room to start the game
-  room.forEach((ws) => {
-    if (ws.readyState === WebSocket.OPEN) {
-      ws.send("Start the game");
-    }
+let playerRooms = {};
+const MAX_PLAYERS = 3;
+
+function userJoinRoom(io, socket) {
+  if (waitingPlayers.length > MAX_PLAYERS);
+  const player1 = waitingPlayers.shift();
+  const player2 = waitingPlayers.shift();
+  const randRoomId = Math.ceil(Math.random() * 10000);
+  player1.join(randRoomId);
+  player2.join(randRoomId);
+  playerRooms[player1.id] = randRoomId;
+  playerRooms[player2.id] = randRoomId;
+  io.to(randRoomId).emit("startGame", {
+    room: randRoomId,
+    player1: player1.id,
+    player2: player2.id,
+    player1Username: player1.username,
+    player2Username: player2.username,
   });
+  console.log(`Game started in room ${randRoomId}`);
 }
 
-server.listen(process.env.PORT || 8080, () => {
-  console.log(`Server started on port ${server.address().port}`);
+function cancelPlayerSearch(socket) {
+  waitingPlayers = waitingPlayers.filter((player) => player !== socket);
+}
+
+io.on("connection", async (socket) => {
+  console.log("User connected, ID: " + socket.id);
+  socket.on("login", (username) => {
+    socket.username = username;
+    userJoinRoom(io, socket);
+  });
+
+  socket.on("playerMove", ({ move, fen }) => {
+    const room = playerRooms[socket.id];
+    socket.to(room).emit("opponentMove", { move, fen });
+    console.log(move, fen, room);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User connected, ID: " + socket.id);
+    const room = playerRooms[socket.id];
+    if (room) {
+      socket
+        .to(room)
+        .emit(
+          "opponentDisconnected",
+          "Your opponent has disconnected. You win!"
+        );
+    }
+    delete playerRooms[socket.id];
+    waitingPlayers = waitingPlayers.filter((player) => player !== socket);
+  });
+});
+
+server.listen(PORT, () => {
+  console.log("Server started on port: " + PORT);
 });
