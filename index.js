@@ -10,9 +10,9 @@ server.on("error", (error) => {
   console.log("Error starting server: " + error);
 });
 
-let waitingPlayers = [];
+/* let waitingPlayers = [];
 let playerRooms = {};
-const MAX_PLAYERS = 3;
+const MAX_PLAYERS = 3; */
 
 /*function userJoinRoom(io, socket) {
   if (waitingPlayers.length > MAX_PLAYERS);
