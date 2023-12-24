@@ -4,6 +4,7 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+const cors = require("cors");
 
 app.get("/", (req, res) => {
   res.sendFile("index.php");
