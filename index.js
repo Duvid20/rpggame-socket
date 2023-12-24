@@ -1,24 +1,4 @@
-const express = require("express");
-const app = express();
 const http = require("http");
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-const cors = require("cors");
-
-app.get("/", (req, res) => {
-  res.sendFile("index.php");
-});
-
-io.on("connection", (socket) => {
-  console.log("a user connected");
-});
-
-server.listen(3000, () => {
-  console.log("listening on *:3000");
-});
-
-/*const http = require("http");
 const socketIO = require("socket.io");
 
 const server = http.createServer();
@@ -26,16 +6,12 @@ const io = socketIO(server, { cors: { origin: "*" } });
 
 const PORT = process.env.PORT || 3000;
 
-server.on("error", (error) => {
-  console.log("Error starting server: " + error);
-});
-
 let waitingPlayers = [];
 let playerRooms = {};
-const MAX_PLAYERS = 3;
 
 function userJoinRoom(io, socket) {
-  if (waitingPlayers.length > MAX_PLAYERS);
+  waitingPlayers.push(socket);
+  if (waitingPlayers.length < 2) return;
   const player1 = waitingPlayers.shift();
   const player2 = waitingPlayers.shift();
   const randRoomId = Math.ceil(Math.random() * 10000);
@@ -53,8 +29,12 @@ function userJoinRoom(io, socket) {
   console.log(`Game started in room ${randRoomId}`);
 }
 
+function cancelPlayerSearch(socket) {
+  waitingPlayers = waitingPlayers.filter((player) => player !== socket);
+}
+
 io.on("connection", async (socket) => {
-  console.log("User connected, ID: " + socket.id);
+  console.log("A user connected");
   socket.on("login", (username) => {
     socket.username = username;
     userJoinRoom(io, socket);
@@ -67,7 +47,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User connected, ID: " + socket.id);
+    console.log("A user disconnected");
     const room = playerRooms[socket.id];
     if (room) {
       socket
@@ -80,9 +60,8 @@ io.on("connection", async (socket) => {
     delete playerRooms[socket.id];
     waitingPlayers = waitingPlayers.filter((player) => player !== socket);
   });
-  });
+});
 
-  server.listen(PORT, () => {
-    console.log("Server started on port: " + PORT);
-  });
-});*/
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
