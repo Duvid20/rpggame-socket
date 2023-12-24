@@ -9,22 +9,22 @@ const PORT = process.env.PORT || 3000;
 let rooms = [];
 let roomSize = 0;
 let roomNumber = 0;
+let playerCount = 0;
 
 io.on("connection", async (socket) => {
-  console.log("A user connected");
+  playerCount++;
+  console.log("user " + playerCount + "just connected");
 
   // assign user to room
-  if (roomSize === 20) {
+
+  /*if (roomSize === 20) {
     roomSize = 0;
     roomNumber++;
   }
+
   let roomName = "room" + roomNumber;
   socket.join(roomName);
-  roomSize++;
-
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
+  roomSize++;*/
 
   // user disconnects
   socket.on("disconnect", () => {
