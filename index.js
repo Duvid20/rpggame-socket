@@ -18,7 +18,7 @@ io.on("connection", async (socket) => {
     roomSize = 0;
     roomNumber++;
   }
-  let roomName = 'room' + roomNumber;
+  let roomName = "room" + roomNumber;
   socket.join(roomName);
   roomSize++;
 
@@ -35,9 +35,7 @@ io.on("connection", async (socket) => {
   socket.on("move", (position) => {
     socket.to(roomName).emit("playerMoved", { id: socket.id, position });
   });
-
 });
-
 
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
