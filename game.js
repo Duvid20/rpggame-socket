@@ -1,8 +1,25 @@
-class Game {
-  constructor(name, color) {
-    this.player = new Player(name, "player", color, { top: 50, left: 50 }, 5);
+/*class Game {
+  startMoveSpeed = 5;
+  spawnPosition = { top: 300, left: 300 };
+  players = [];
+
+  constructor() {
     this.inputHandler = new InputHandler(this.player);
     this.inputHandler.executeEventListener();
+  }
+
+  addPlayer(name, socketId) {
+    this.players.push(
+      new Player(name, socketId, this.spawnPosition, this.startMoveSpeed)
+    );
+  }
+
+  removePlayer(socketId) {
+    for (let i = 0; i < this.players.length; i++) {
+      if (this.players[i].id === socketId) {
+        this.players.splice(i, 1);
+      }
+    }
   }
 }
 
@@ -14,9 +31,9 @@ class Player {
     this.position = position;
     this.moveSpeed = moveSpeed;
   }
-}
+}*/
 
-class InputHandler {
+/*class InputHandler {
   constructor(player) {
     this.player = player;
   }
@@ -45,6 +62,4 @@ class InputHandler {
       }
     });
   }
-}
-
-const game = new Game("Magomed");
+}*/

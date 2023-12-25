@@ -11,31 +11,24 @@ let roomSize = 0;
 let roomNumber = 0;
 let playerCount = 0;
 
+const game = new Game();
+
 io.on("connection", async (socket) => {
+  let playerName = "Magomed" + playerCount + 1;
+  game.addPlayer(playerName, socket.id);
   playerCount++;
+
   console.log("user " + playerCount + "just connected");
 
-  // assign user to room
-
-  /*if (roomSize === 20) {
-    roomSize = 0;
-    roomNumber++;
-  }
-
-  let roomName = "room" + roomNumber;
-  socket.join(roomName);
-  roomSize++;*/
-
   // user disconnects
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (socket) => {
+    game.removePlayer(socket.id);
     console.log("A user disconnected");
   });
 
-  // user moves
-  socket.on("move", (data) => {
-    console.log("Moving user id " + socket.id);
-    io.emit("move", data);
-    //socket.to(roomName).emit("playerMoved", { id: socket.id, position });
+  // a player moves
+  socket.on("player move", (keysPressed) => {
+    socket.emit("player move", keysPressed);
   });
 });
 
