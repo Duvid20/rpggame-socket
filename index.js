@@ -32,8 +32,9 @@ io.on("connection", async (socket) => {
   });
 
   // user moves
-  socket.on("move", (position) => {
+  socket.on("move", (data) => {
     console.log("Moving user id " + socket.id);
+    io.emit("move", data);
     //socket.to(roomName).emit("playerMoved", { id: socket.id, position });
   });
 });
