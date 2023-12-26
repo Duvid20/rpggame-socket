@@ -57,7 +57,8 @@ class Player {
   }
 
   getMoveSpeed() {
-    return this.moveSpeed;
+    //return this.moveSpeed;
+    return 5;
   }
 
   getName() {
