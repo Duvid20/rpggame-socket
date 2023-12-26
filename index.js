@@ -11,7 +11,7 @@ let playerManager = new PlayerManager();
 function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
   let newPosition = { x: oldPosition.x, y: oldPosition.y };
 
-  if (keysPressed.has("w") || keysPressed.has("ArrowUp")) {
+  if (keysPressed.includes("w") || keysPressed.includes("ArrowUp")) {
     newPosition.y -= moveSpeed;
   }
   if (keysPressed.has("a") || keysPressed.has("ArrowLeft")) {
