@@ -36,7 +36,9 @@ class Player {
     this.id = id;
     this.socketID = socketID;
     this.color = color;
-    this.position = { top: 300, left: 300 };
+    let randomX = Math.floor(Math.random() * 301) + 20;
+    let randomY = Math.floor(Math.random() * 301) + 20;
+    this.position = { top: randomX, left: randomy };
     this.moveSpeed = 5;
   }
 
