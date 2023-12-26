@@ -35,7 +35,7 @@ io.on("connection", async (socket) => {
   console.log("total players: " + playerManager.getPlayerCount().total);
   console.log(
     "player with id=" +
-      playerManager.getPlayer(playerManager.playerCount().total - 1) +
+      playerManager.getPlayer(playerManager.getPlayerCount().total - 1) +
       " just connected"
   );
 
