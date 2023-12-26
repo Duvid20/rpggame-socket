@@ -42,10 +42,10 @@ io.on("connection", async (socket) => {
       " just connected"
   );
 
-  // emmit id to new player
+  // emmit id to new player socket
   io.emit("id", playerManager.getPlayerCount().total - 1);
 
-  // user disconnects, remove player
+  // user disconnects, remove player socket
   socket.on("disconnect", (id) => {
     console.log("A user disconnected");
     playerManager.removePlayer(id);
