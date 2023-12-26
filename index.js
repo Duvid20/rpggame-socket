@@ -54,6 +54,7 @@ io.on("connection", async (socket) => {
   // a player moves, calculate new position and emit it to all players
   socket.on("player move", (data) => {
     let movingPlayer = playerManager.getPlayer(data.id);
+    console.log("moving player: " + movingPlayer.getName());
     let moveSpeed = movingPlayer.getMoveSpeed();
     let oldPosition = movingPlayer.getPosition();
 
