@@ -55,6 +55,8 @@ io.on("connection", async (socket) => {
   socket.on("player move", (data) => {
     let movingPlayer = playerManager.getPlayer(data.id);
 
+    console.log(playerManager.getPlayers());
+
     if (!movingPlayer) {
       console.log("player not found");
       return;
