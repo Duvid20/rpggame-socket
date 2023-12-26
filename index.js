@@ -8,14 +8,9 @@ const { Player, PlayerManager } = require("./classes");
 const { spawn } = require("child_process");
 let playerManager = new PlayerManager();
 
-function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
+function calculateNewPosition(oldPosition, keysPressedArr, moveSpeed) {
   let newPosition = { top: oldPosition.top, left: oldPosition.left };
-
-  if (keysPressed instanceof Set) {
-    console.log("keysPressed is a Set");
-  } else {
-    console.log("keysPressed is not a Set");
-  }
+  let keysPressed = new Set(keysPressedArr);
 
   if (keysPressed.has("w") || keysPressed.has("ArrowUp")) {
     newPosition.left -= moveSpeed;
