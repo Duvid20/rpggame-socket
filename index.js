@@ -11,7 +11,7 @@ let playerManager = new PlayerManager();
 function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
   let newPosition = { x: oldPosition.x, y: oldPosition.y };
 
-  if (keysPressed.includes("w") || keysPressed.includes("ArrowUp")) {
+  if (keysPressed.has("w") || keysPressed.has("ArrowUp")) {
     newPosition.y -= moveSpeed;
   }
   if (keysPressed.has("a") || keysPressed.has("ArrowLeft")) {
@@ -54,17 +54,6 @@ io.on("connection", async (socket) => {
   // a player moves, calculate new position and emit it to all players
   socket.on("player move", (data) => {
     let movingPlayer = playerManager.getPlayer(data.id);
-
-    console.log("Players[] = " + playerManager.getPlayers());
-    console.log("id of player: " + data.id);
-
-    if (!movingPlayer) {
-      console.log("player not found");
-      return;
-    } else {
-      console.log("moving player: " + movingPlayer.getName());
-    }
-
     console.log("moving player: " + movingPlayer.getName());
     let moveSpeed = movingPlayer.getMoveSpeed();
     let oldPosition = movingPlayer.getPosition();
@@ -79,7 +68,7 @@ io.on("connection", async (socket) => {
     const id = data.id;
     const position = movingPlayer.getPosition();
     const name = movingPlayer.getName();
-    data.socket.emit("player position", id, position, name);
+    data.socket.emit("player position", { id, position, name });
   });
 });
 
