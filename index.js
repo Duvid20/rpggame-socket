@@ -5,14 +5,10 @@ const io = socketIO(server, { cors: { origin: "*" } });
 const PORT = process.env.PORT || 3000;
 
 const { Player, PlayerManager } = require("./classes");
-const { spawn } = require("child_process");
 let playerManager = new PlayerManager();
 
 function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
   let newPosition = { top: oldPosition.top, left: oldPosition.left };
-  //let keysPressed = new Set(keysPressedArr);
-  console.log("typeof keysPressed: " + typeof keysPressed);
-  console.log("keysPressed: " + keysPressed);
 
   if (keysPressed.includes("w") || keysPressed.includes("ArrowUp")) {
     newPosition.left -= moveSpeed;
