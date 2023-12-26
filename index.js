@@ -58,6 +58,8 @@ io.on("connection", async (socket) => {
     if (!movingPlayer) {
       console.log("player not found");
       return;
+    } else {
+      console.log("moving player: " + movingPlayer.getName());
     }
 
     console.log("moving player: " + movingPlayer.getName());
