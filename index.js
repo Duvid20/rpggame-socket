@@ -69,7 +69,7 @@ io.on("connection", async (socket) => {
     const id = data.id;
     const position = movingPlayer.getPosition();
     const name = movingPlayer.getName();
-    data.socket.emit("player position", { id, position, name });
+    io.emit("player position", { id, position, name });
   });
 });
 
