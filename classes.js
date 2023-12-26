@@ -31,16 +31,13 @@ class PlayerManager {
 }
 
 class Player {
-  spawnPosition = { top: 300, left: 300 };
-  startMoveSpeed = 5;
-
   constructor(name, id, socketID, color) {
     this.name = name;
     this.id = id;
     this.socketID = socketID;
     this.color = color;
-    this.position = spawnPosition;
-    this.moveSpeed = startMoveSpeed;
+    this.position = { top: 300, left: 300 };
+    this.moveSpeed = 5;
   }
 
   getPosition() {
