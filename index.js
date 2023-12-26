@@ -11,16 +11,16 @@ function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
   let newPosition = { top: oldPosition.top, left: oldPosition.left };
 
   if (keysPressed.includes("w") || keysPressed.includes("ArrowUp")) {
-    newPosition.left -= moveSpeed;
-  }
-  if (keysPressed.includes("a") || keysPressed.includes("ArrowLeft")) {
     newPosition.top -= moveSpeed;
   }
+  if (keysPressed.includes("a") || keysPressed.includes("ArrowLeft")) {
+    newPosition.left -= moveSpeed;
+  }
   if (keysPressed.includes("s") || keysPressed.includes("ArrowDown")) {
-    newPosition.left += moveSpeed;
+    newPosition.top += moveSpeed;
   }
   if (keysPressed.includes("d") || keysPressed.includes("ArrowRight")) {
-    newPosition.top += moveSpeed;
+    newPosition.left += moveSpeed;
   }
 
   return newPosition;
