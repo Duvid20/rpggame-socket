@@ -9,19 +9,25 @@ const { spawn } = require("child_process");
 let playerManager = new PlayerManager();
 
 function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
-  let newPosition = { x: oldPosition.x, y: oldPosition.y };
+  let newPosition = { top: oldPosition.top, left: oldPosition.left };
+
+  if (keysPressed instanceof Set) {
+    console.log("keysPressed is a Set");
+  } else {
+    console.log("keysPressed is not a Set");
+  }
 
   if (keysPressed.has("w") || keysPressed.has("ArrowUp")) {
-    newPosition.y -= moveSpeed;
+    newPosition.left -= moveSpeed;
   }
   if (keysPressed.has("a") || keysPressed.has("ArrowLeft")) {
-    newPosition.x -= moveSpeed;
+    newPosition.top -= moveSpeed;
   }
   if (keysPressed.has("s") || keysPressed.has("ArrowDown")) {
-    newPosition.y += moveSpeed;
+    newPosition.left += moveSpeed;
   }
   if (keysPressed.has("d") || keysPressed.has("ArrowRight")) {
-    newPosition.x += moveSpeed;
+    newPosition.top += moveSpeed;
   }
 
   return newPosition;
