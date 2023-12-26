@@ -5,8 +5,9 @@ class PlayerManager {
   }
 
   addPlayer(name, socketID, color) {
-    let id = this.playerCount.total;
-    this.players.push(new Player(name, id, socketID, color));
+    this.players.push(
+      new Player(name, this.playerCount.total, socketID, color)
+    );
     this.playerCount.current++;
     this.playerCount.total++;
   }
