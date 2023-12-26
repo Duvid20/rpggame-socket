@@ -5,7 +5,7 @@ class PlayerManager {
   }
 
   addPlayer(name, socketID, color) {
-    id = this.playerCount.total;
+    this.id = this.playerCount.total;
     this.players.push(new Player(name, id, socketID, color));
     this.playerCount.current++;
     this.playerCount.total++;
