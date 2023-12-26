@@ -63,7 +63,7 @@ io.on("connection", async (socket) => {
 
     let newPosition = calculateNewPosition(
       oldPosition,
-      data.keysPressed,
+      data.keysPressedArr,
       moveSpeed
     );
     movingPlayer.setPosition(newPosition);
