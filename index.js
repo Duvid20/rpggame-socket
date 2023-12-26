@@ -1,37 +1,67 @@
 const http = require("http");
 const socketIO = require("socket.io");
-
 const server = http.createServer();
 const io = socketIO(server, { cors: { origin: "*" } });
-
 const PORT = process.env.PORT || 3000;
 
-let rooms = [];
-let roomSize = 0;
-let roomNumber = 0;
-let playerCount = 0;
+const { Player, PlayerManager } = require("./classes");
+const { spawn } = require("child_process");
+let playerManager = new PlayerManager();
+
+function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
+  let newPosition = { x: oldPosition.x, y: oldPosition.y };
+
+  if (keysPressed.has("w") || keysPressed.has("ArrowUp")) {
+    newPosition.y -= moveSpeed;
+  }
+  if (keysPressed.has("a") || keysPressed.has("ArrowLeft")) {
+    newPosition.x -= moveSpeed;
+  }
+  if (keysPressed.has("s") || keysPressed.has("ArrowDown")) {
+    newPosition.y += moveSpeed;
+  }
+  if (keysPressed.has("d") || keysPressed.has("ArrowRight")) {
+    newPosition.x += moveSpeed;
+  }
+
+  return newPosition;
+}
 
 io.on("connection", async (socket) => {
-  let username = "Magomed" + playerCount + 1;
-  socket.emit("username", username);
-  socket.emit("socketID", socket.id);
-  socket.emit("playerID", playerCount);
-  playerCount++;
-  console.log("player with id=" + playerCount + " just connected");
+  // user connects, create player
+  let name = "Magomed" + socket.id.slice(0, 4);
+  playerManager.addPlayer(name, "lightblue", socket.id);
 
-  // user disconnects
-  socket.on("disconnect", (socket) => {
+  console.log("total players: " + playerManager.playerCount().total);
+  console.log(
+    "player with id=" +
+      playerManager.getPlayer(playerManager.playerCount().total - 1) +
+      " just connected"
+  );
+
+  // user disconnects, remove player
+  socket.on("disconnect", (id) => {
     console.log("A user disconnected");
+    playerManager.removePlayer(id);
   });
 
-  // a player moves
+  // a player moves, calculate new position and emit it to all players
   socket.on("player move", (data) => {
-    let oldPosition = calculateNewPosition(
-      data.player.position,
-      data.keysPressed
-    );
+    let movingPlayer = playerManager.getPlayer(data.id);
+    let moveSpeed = movingPlayer.getMoveSpeed();
+    let oldPosition = movingPlayer.getPosition();
 
-    data.socket.emit("player move", data);
+    let newPosition = calculateNewPosition(
+      oldPosition,
+      data.keysPressed,
+      moveSpeed
+    );
+    movingPlayer.setPosition(newPosition);
+
+    const id = data.id;
+    const position = movingPlayer.getPosition();
+    const name = movingPlayer.getName();
+    data.socket.emit("player position", id, position, name);
   });
 });
 
