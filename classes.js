@@ -25,7 +25,7 @@ class PlayerManager {
     return this.players;
   }
 
-  playerCount() {
+  getPlayerCount() {
     return this.playerCount;
   }
 }

@@ -32,7 +32,7 @@ io.on("connection", async (socket) => {
   let name = "Magomed" + socket.id.slice(0, 4);
   playerManager.addPlayer(name, "lightblue", socket.id);
 
-  console.log("total players: " + playerManager.playerCount().total);
+  console.log("total players: " + playerManager.getPlayerCount().total);
   console.log(
     "player with id=" +
       playerManager.getPlayer(playerManager.playerCount().total - 1) +
