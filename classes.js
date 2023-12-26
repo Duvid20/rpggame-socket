@@ -63,6 +63,10 @@ class Player {
   getName() {
     return this.name;
   }
+
+  getID() {
+    return this.id;
+  }
 }
 
 module.exports = { Player, PlayerManager };

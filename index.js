@@ -33,9 +33,12 @@ io.on("connection", async (socket) => {
   playerManager.addPlayer(name, "lightblue", socket.id);
 
   console.log("total players: " + playerManager.getPlayerCount().total);
+  console.log("current players: " + playerManager.getPlayerCount().current);
   console.log(
     "player with id=" +
-      playerManager.getPlayer(playerManager.getPlayerCount().total - 1) +
+      playerManager
+        .getPlayer(playerManager.getPlayerCount().total - 1)
+        .getID() +
       " just connected"
   );
 
