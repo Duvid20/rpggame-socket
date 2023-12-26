@@ -8,20 +8,20 @@ const { Player, PlayerManager } = require("./classes");
 const { spawn } = require("child_process");
 let playerManager = new PlayerManager();
 
-function calculateNewPosition(oldPosition, keysPressedArr, moveSpeed) {
+function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
   let newPosition = { top: oldPosition.top, left: oldPosition.left };
-  let keysPressed = new Set(keysPressedArr);
+  //let keysPressed = new Set(keysPressedArr);
 
-  if (keysPressed.has("w") || keysPressed.has("ArrowUp")) {
+  if (keysPressed.includes("w") || keysPressed.includes("ArrowUp")) {
     newPosition.left -= moveSpeed;
   }
-  if (keysPressed.has("a") || keysPressed.has("ArrowLeft")) {
+  if (keysPressed.includes("a") || keysPressed.includes("ArrowLeft")) {
     newPosition.top -= moveSpeed;
   }
-  if (keysPressed.has("s") || keysPressed.has("ArrowDown")) {
+  if (keysPressed.includes("s") || keysPressed.includes("ArrowDown")) {
     newPosition.left += moveSpeed;
   }
-  if (keysPressed.has("d") || keysPressed.has("ArrowRight")) {
+  if (keysPressed.includes("d") || keysPressed.includes("ArrowRight")) {
     newPosition.top += moveSpeed;
   }
 
