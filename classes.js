@@ -38,7 +38,7 @@ class Player {
     this.color = color;
     let randomX = Math.floor(Math.random() * 301) + 20;
     let randomY = Math.floor(Math.random() * 301) + 20;
-    this.position = { top: randomX, left: randomy };
+    this.position = { top: randomX, left: randomY };
     this.moveSpeed = 5;
   }
 
