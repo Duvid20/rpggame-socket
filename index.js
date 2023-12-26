@@ -41,8 +41,13 @@ io.on("connection", async (socket) => {
       " just connected"
   );
 
-  // emmit id to new player socket
-  io.emit("id", playerManager.getPlayerCount().total - 1);
+  // emit id and position to new player socket
+  const newPlayerID = playerManager.getPlayerCount().total - 1;
+  const newPlayer = playerManager.getPlayer(newPlayerID);
+  const position = newPlayer.getPosition();
+
+  io.emit("id", newPlayerID);
+  io.emit("spawnPosition", position);
 
   // user disconnects, remove player socket
   socket.on("disconnect", (id) => {
