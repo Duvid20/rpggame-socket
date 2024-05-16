@@ -26,7 +26,8 @@ function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
   return newPosition;
 }
 
-function gameLoop(timestamp) {
+// animationframe test
+/*function gameLoop(timestamp) {
   let deltaTime = timestamp - lastTime;
   lastTime = timestamp;
 
@@ -51,7 +52,7 @@ function gameLoop(timestamp) {
 
   // Request the next frame
   requestAnimationFrame(gameLoop);
-}
+}*/
 
 io.on("connection", async (socket) => {
   // user connects, create player
@@ -102,7 +103,8 @@ io.on("connection", async (socket) => {
     io.emit("player position", { id, position, name });
 
     // Start the game loop
-    requestAnimationFrame(gameLoop);
+    // animationframe test
+    // requestAnimationFrame(gameLoop);
   });
 });
 
