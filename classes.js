@@ -4,6 +4,8 @@ class PlayerManager {
     this.playerCount = { current: 0, total: 0 };
   }
 
+  //Test
+
   addPlayer(name, socketID, color) {
     this.players.push(
       new Player(name, this.playerCount.total, socketID, color)
