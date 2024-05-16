@@ -53,9 +53,6 @@ function gameLoop(timestamp) {
   requestAnimationFrame(gameLoop);
 }
 
-// Start the game loop
-requestAnimationFrame(gameLoop);
-
 io.on("connection", async (socket) => {
   // user connects, create player
   let name = "Magomed" + socket.id.slice(0, 4);
@@ -103,6 +100,9 @@ io.on("connection", async (socket) => {
     const position = movingPlayer.getPosition();
     const name = movingPlayer.getName();
     io.emit("player position", { id, position, name });
+
+    // Start the game loop
+    requestAnimationFrame(gameLoop);
   });
 });
 
