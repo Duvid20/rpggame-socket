@@ -26,34 +26,6 @@ function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
   return newPosition;
 }
 
-// animationframe test
-/*function gameLoop(timestamp) {
-  let deltaTime = timestamp - lastTime;
-  lastTime = timestamp;
-
-  // Get the keys pressed from the player manager
-  let keysPressed = playerManager.getKeysPressed();
-
-  // Get the old position from the player manager
-  let oldPosition = playerManager.getOldPosition();
-
-  // Calculate the new position
-  let newPosition = calculateNewPosition(
-    oldPosition,
-    keysPressed,
-    (moveSpeed * deltaTime) / 1000
-  );
-
-  // Update the player's position in the player manager
-  playerManager.updatePosition(newPosition);
-
-  // Draw the new frame (replace this with your own rendering code)
-  drawFrame();
-
-  // Request the next frame
-  requestAnimationFrame(gameLoop);
-}*/
-
 io.on("connection", async (socket) => {
   // user connects, create player
   let name = "Magomed" + socket.id.slice(0, 4);
@@ -101,10 +73,6 @@ io.on("connection", async (socket) => {
     const position = movingPlayer.getPosition();
     const name = movingPlayer.getName();
     io.emit("player position", { id, position, name });
-
-    // Start the game loop
-    // animationframe test
-    // requestAnimationFrame(gameLoop);
   });
 });
 
