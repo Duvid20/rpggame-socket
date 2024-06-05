@@ -7,25 +7,6 @@ const PORT = process.env.PORT || 3000;
 const { Player, PlayerManager } = require("./classes");
 let playerManager = new PlayerManager();
 
-function calculateNewPosition(oldPosition, keysPressed, moveSpeed) {
-  let newPosition = { top: oldPosition.top, left: oldPosition.left };
-
-  if (keysPressed.includes("w") || keysPressed.includes("ArrowUp")) {
-    newPosition.top -= moveSpeed;
-  }
-  if (keysPressed.includes("a") || keysPressed.includes("ArrowLeft")) {
-    newPosition.left -= moveSpeed;
-  }
-  if (keysPressed.includes("s") || keysPressed.includes("ArrowDown")) {
-    newPosition.top += moveSpeed;
-  }
-  if (keysPressed.includes("d") || keysPressed.includes("ArrowRight")) {
-    newPosition.left += moveSpeed;
-  }
-
-  return newPosition;
-}
-
 io.on("connection", async (socket) => {
   // user connects, create player
   let name = "Magomed" + socket.id.slice(0, 4);
@@ -51,7 +32,7 @@ io.on("connection", async (socket) => {
 
   // user disconnects, remove player socket
   socket.on("disconnect", (id) => {
-    console.log("A user disconnected");
+    console.log("user " + id + " disconnected");
     playerManager.removePlayer(id);
   });
 
